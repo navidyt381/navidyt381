@@ -1,6 +1,7 @@
-<?php
+<?php 
 include("head.html");
 
+$id = $_POST["id"];
 $title = $_POST["title"];
 $description = $_POST["description"];
 
@@ -14,7 +15,11 @@ if ($_FILES["image"]["error"] == 0) {
 }
 
 $connect = mysqli_connect("localhost", "root", "", "parsnovindb");
-$query = "INSERT INTO newsly (imageurl, title, description) VALUES ('$imageurl', '$title', '$description')";
+if ($imageurl != "") {
+    $query = "UPDATE newsly SET imageurl='$imageurl', title='$title', description='$description' WHERE id='$id'";
+} else {
+    $query = "UPDATE newsly SET title='$title', description='$description' WHERE id='$id'";
+}
 $result = mysqli_query($connect, $query);
 
 if ($result) {
